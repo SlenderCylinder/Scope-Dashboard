@@ -1,8 +1,15 @@
 import React from "react";
 
-export default function Table({ beneficiaries }) {
+export default function Table({ searchQuery, beneficiaries }) {
+  const filteredBeneficiaries = beneficiaries.filter((beneficiary) => {
+    const regex = new RegExp(searchQuery, "i");
+    return (
+      regex.test(beneficiary.firstName) || regex.test(beneficiary.lastName)
+    );
+  });
+
   return (
-    <table className="Table w-[480px] h-[159px] bg-neutral-700 rounded border border-zinc-600">
+    <table className="Table w-full h-[159px] bg-neutral-700 rounded border border-zinc-600">
       <thead>
         <tr className="Row self-stretch bg-white bg-opacity-0">
           <th className="Cell w-[120px] self-stretch bg-white bg-opacity-5 border-l border-t border-zinc-600">
@@ -36,7 +43,7 @@ export default function Table({ beneficiaries }) {
         </tr>
       </thead>
       <tbody>
-        {beneficiaries.map((beneficiary, index) => (
+        {filteredBeneficiaries.map((beneficiary, index) => (
           <tr key={index} className="Row self-stretch bg-white bg-opacity-0">
             <td className="Cell w-[120px] self-stretch bg-white bg-opacity-0 border-l border-t border-zinc-600">
               <div className="Content self-stretch px-3 py-2.5">

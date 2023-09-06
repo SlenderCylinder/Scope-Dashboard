@@ -1,5 +1,6 @@
 import React from "react";
 import { FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function BenCard({ mp, fp }) {
   return (
@@ -30,12 +31,12 @@ export default function BenCard({ mp, fp }) {
             <div className="text-black text-xs font-normal">Female</div>
           </div>
         </div>
-        <a
-          href="#"
-          className="underline text-right text-black text-xs mt-2 font-normal"
+        <Link
+          to="/createBeneficiary"
+          className=" hover:underline text-right text-black text-xs mt-2 font-normal"
         >
-          Beneficiary details 🔻
-        </a>
+          Create beneficiary ➕
+        </Link>
       </div>
     </div>
   );
