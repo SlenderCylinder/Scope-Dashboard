@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios"; // Import Axios
 
 export default function CreateBen() {
   const [formData, setFormData] = useState({
@@ -34,9 +35,54 @@ export default function CreateBen() {
     },
   ];
 
-  const handleSubmit = (e) => {
+
+  //Function to submit formdata to API endpoint
+  const sendFormDataToAPI = async () => {
+    console.log("sending")
+    try {
+      
+      const apiUrl = "http://localhost:3000/beneficiaries"; // MongoDB endpoint URL
+  
+      const requestData = {
+        uniqID: 1234567893,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        balance: 10000,
+        district: formData.district,
+        dsDivision: formData.dsDivision,
+        gnDivision: formData.gnDivision,
+        gender: formData.gender,
+
+      };
+  
+      const response = await axios.post(apiUrl, requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      console.log("API Response:", response.data);
+      console.log("Data submitted");
+  
+      setFormData({
+        firstName: "",
+        lastName: "",
+        district: "",
+        dsDivision: "",
+        gnDivision: "",
+        gender: "",
+      });
+      console.log("Form data rest.");
+    } catch (error) {
+      console.error("API Error:", error);
+    }
+  };
+  
+  //Click event for Create button
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // handle form submission here
+    console.log("Create button clicked"); 
+    await sendFormDataToAPI(); // API function call
   };
 
   const handleInputChange = (e) => {
@@ -171,10 +217,11 @@ export default function CreateBen() {
         <button
           type="submit"
           className="bg-blue-500 w-[120px] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Create
-        </button>
-      </form>
-    </div>
-  );
-}
+          >
+            Create
+          </button>
+        </form>
+      </div>
+    );
+  }
+  
