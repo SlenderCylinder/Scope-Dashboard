@@ -6,7 +6,7 @@ import BenCard from "./Components/BenCard";
 import ReCard from "./Components/ReCard";
 import Search from "./Components/Search";
 import Table from "./Components/Table";
-import CreateBen from "./CreateBen";
+import Beneficiary from "./Beneficiary";
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path="/createBeneficiary" element={<CreateBen />} />
+      <Route path="/createBeneficiary" element={<Beneficiary />} />
       <Route
         path="/"
         element={
