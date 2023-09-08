@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import Papa from "papaparse";
-import axios from 'axios';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-//import api from "../api/api";
+import api from "../api/api";
 
 export default function BulkBen() {
   const [file, setFile] = useState(null);
@@ -64,7 +63,7 @@ export default function BulkBen() {
 
             try {
                 for (const formDataItem of formDataArray) {
-                  const response = axios.post("http://localhost:3000/beneficiaries", formDataItem, {
+                  const response = api.post("http://localhost:3000/beneficiaries", formDataItem, {
                     headers: {
                       "Content-Type": "application/json",
                     },
