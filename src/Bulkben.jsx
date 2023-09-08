@@ -86,44 +86,10 @@ export default function BulkBen() {
           }
         },
       });
-    } else if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
-      // Parse Excel file using XLSX
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = new Uint8Array(e.target.result);
-        console.log("Parsing complete");
-        console.log(data);
-        const workbook = XLSX.read(data, { type: "array" });
-  
-        // Assuming the first sheet contains data
-        const sheet = workbook.Sheets[workbook.SheetNames[0]];
-
-        let firstNameIndex, lastNameIndex, districtIndex, dsDivisionIndex, gnDivisionIndex, genderIndex;
-        // Convert sheet data to an array of objects
-        const formDataArray = XLSX.utils.sheet_to_json(sheet, { header: 1 }).slice(1).map((row) => ({
-          firstName: row[firstNameIndex],
-          lastName: row[lastNameIndex],
-          district: row[districtIndex],
-          dsDivision: row[dsDivisionIndex],
-          gnDivision: row[gnDivisionIndex],
-          gender: row[genderIndex],
-        }));
-
-        console.log("firstNameIndex:", firstNameIndex);
-        console.log("lastNameIndex:", lastNameIndex);
-  
-        console.log(formDataArray);
-
-        const response = axios.post("/beneficiaries", formDataArray, {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        console.log("Success:", response.data);
-  
-        // Now you can set or use the formDataArray as needed
-      };
-      reader.readAsArrayBuffer(file);
+    } else {
+      toast.error("Failed to upload beneficiaries. This file format is not supported.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
 
   };
