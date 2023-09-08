@@ -22,8 +22,8 @@ export default function BulkBen() {
 
   return (
     <div className="mt-4">
-      <div className="flex w-full items-center mb-4">
-        <label htmlFor="file-upload" className="cursor-pointer mr-4">
+      <div className="flex items-center mb-4">
+        <label htmlFor="file-upload" className="flex cursor-pointer mr-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
