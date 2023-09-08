@@ -1,14 +1,22 @@
 import React, { useState } from "react";
+import * as XLSX from "xlsx";
+import Papa from "papaparse";
+import axios from 'axios';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+//import api from "../api/api";
 
 export default function BulkBen() {
   const [file, setFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [successfulUploadCount, setSuccessfulUploadCount] = useState(0); 
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
+    let successfulUploadCount = 0;
     // Simulate upload progress
     let progress = 0;
     const interval = setInterval(() => {
@@ -18,6 +26,107 @@ export default function BulkBen() {
         clearInterval(interval);
       }
     }, 500);
+
+    if (!file) {
+      return;
+    }
+    // Check the file type (CSV or Excel)
+    if (file.name.endsWith(".csv")) {
+      // Parse CSV file using Papaparse
+      Papa.parse(file, {
+        skipEmptyLines: "greedy", // Skip empty lines
+        complete: (result) => {
+          console.log("Parsing complete");
+          if (result.data && result.data.length > 0) {
+            // Assuming the first row contains headers
+            const headers = result.data[0];
+      
+            // Find the index of each required field in the headers
+            const firstNameIndex = headers.indexOf("firstName");
+            const lastNameIndex = headers.indexOf("lastName");
+            const districtIndex = headers.indexOf("district");
+            const dsDivisionIndex = headers.indexOf("dsDivision");
+            const gnDivisionIndex = headers.indexOf("gnDivision");
+            const genderIndex = headers.indexOf("gender");
+      
+            // Process the data and create an array of form data objects
+            const formDataArray = result.data.slice(1).map((row) => ({
+              firstName: row[firstNameIndex],
+              lastName: row[lastNameIndex],
+              district: row[districtIndex],
+              dsDivision: row[dsDivisionIndex],
+              gnDivision: row[gnDivisionIndex],
+              gender: row[genderIndex],
+              balance: 10000,
+            }));
+      
+            
+
+            try {
+                for (const formDataItem of formDataArray) {
+                  const response = axios.post("http://localhost:3000/beneficiaries", formDataItem, {
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  });
+                  console.log("Success:", response.data);
+                  successfulUploadCount++;
+                  setSuccessfulUploadCount(successfulUploadCount);
+                }
+                toast.success(`Successfully uploaded ${successfulUploadCount} beneficiaries`, {
+                  position: toast.POSITION.TOP_CENTER, // You can adjust the position as needed
+                });
+              // Now you can set or use the formDataArray as needed
+            } catch (error) {
+              console.error("API Error:", error);
+              if (error.response) {
+                console.error("API Error Message:", error.response.data.message);
+              }
+            }
+            // Now you can set or use the formDataArray as needed
+          }
+        },
+      });
+    } else if (file.name.endsWith(".xlsx") || file.name.endsWith(".xls")) {
+      // Parse Excel file using XLSX
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        console.log("Parsing complete");
+        console.log(data);
+        const workbook = XLSX.read(data, { type: "array" });
+  
+        // Assuming the first sheet contains data
+        const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+        let firstNameIndex, lastNameIndex, districtIndex, dsDivisionIndex, gnDivisionIndex, genderIndex;
+        // Convert sheet data to an array of objects
+        const formDataArray = XLSX.utils.sheet_to_json(sheet, { header: 1 }).slice(1).map((row) => ({
+          firstName: row[firstNameIndex],
+          lastName: row[lastNameIndex],
+          district: row[districtIndex],
+          dsDivision: row[dsDivisionIndex],
+          gnDivision: row[gnDivisionIndex],
+          gender: row[genderIndex],
+        }));
+
+        console.log("firstNameIndex:", firstNameIndex);
+        console.log("lastNameIndex:", lastNameIndex);
+  
+        console.log(formDataArray);
+
+        const response = axios.post("/beneficiaries", formDataArray, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log("Success:", response.data);
+  
+        // Now you can set or use the formDataArray as needed
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
   };
 
   return (
@@ -68,6 +177,7 @@ export default function BulkBen() {
       {uploadProgress > 0 && (
         <div className="text-center mt-2">{`${uploadProgress}% uploaded`}</div>
       )}
+      <ToastContainer />
       <button
         className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded mt-4"
         onClick={handleUpload}

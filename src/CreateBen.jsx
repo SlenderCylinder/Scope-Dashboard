@@ -48,6 +48,8 @@ export default function CreateBen() {
           "Content-Type": "application/json",
         },
       });
+  
+      console.log("Success:", response.data);
 
       setFormData({
         firstName: "",
@@ -59,6 +61,9 @@ export default function CreateBen() {
       });
     } catch (error) {
       console.error("API Error:", error);
+      if (error.response) {
+        console.error("API Error Message:", error.response.data.message);
+      }
     }
   };
 
