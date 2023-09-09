@@ -29,7 +29,7 @@ export default function BulkBen() {
     if (!file) {
       return;
     }
-    // Check the file type (CSV or Excel)
+    // Check the file type (to make sure it's CSV)
     if (file.name.endsWith(".csv")) {
       // Parse CSV file using Papaparse
       Papa.parse(file, {
@@ -72,21 +72,21 @@ export default function BulkBen() {
                   successfulUploadCount++;
                   setSuccessfulUploadCount(successfulUploadCount);
                 }
+                //Toast notification for successful submission
                 toast.success(`Successfully uploaded ${successfulUploadCount} beneficiaries`, {
-                  position: toast.POSITION.TOP_CENTER, // You can adjust the position as needed
+                  position: toast.POSITION.TOP_CENTER,
                 });
-              // Now you can set or use the formDataArray as needed
             } catch (error) {
               console.error("API Error:", error);
               if (error.response) {
                 console.error("API Error Message:", error.response.data.message);
               }
             }
-            // Now you can set or use the formDataArray as needed
           }
         },
       });
     } else {
+      //Toast notification for invalid file type
       toast.error("Failed to upload beneficiaries. This file format is not supported.", {
         position: toast.POSITION.TOP_CENTER,
       });
