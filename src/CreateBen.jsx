@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import api from "../api/api";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateBen() {
   const [formData, setFormData] = useState({
@@ -50,6 +52,9 @@ export default function CreateBen() {
       });
   
       console.log("Success:", response.data);
+      toast.success(`Successfully added beneficiary: ${formData.firstName} ${formData.lastName}`, {
+        position: toast.POSITION.TOP_CENTER, // You can adjust the position as needed
+      });
 
       setFormData({
         firstName: "",
@@ -97,6 +102,7 @@ export default function CreateBen() {
 
   return (
     <div className="bg-white p-4">
+      <ToastContainer />
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-row gap-4">
           <div className="flex flex-col gap-2.5 w-1/4">

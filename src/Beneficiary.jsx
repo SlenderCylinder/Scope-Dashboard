@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BulkBen from "./Bulkben";
 import CreateBen from "./CreateBen";
 
+
 export default function Beneficiary() {
   const [selectedTab, setSelectedTab] = useState("create");
 
