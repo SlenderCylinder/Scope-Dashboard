@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Nav from "./Nav";
 import Title from "./Components/Title";
@@ -7,34 +7,41 @@ import ReCard from "./Components/ReCard";
 import Search from "./Components/Search";
 import Table from "./Components/Table";
 import Beneficiary from "./Beneficiary";
+import axios from "axios";
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [fetchedData, setFetchedData] = useState([]); // State variable for fetched data
 
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
   };
+  
+  //temp placeholder for date and lastpurchase - remove later
+  const getRandomItem = (items) => {
+    const randomIndex = Math.floor(Math.random() * items.length);
+    return items[randomIndex];
+  };
 
-  const beneficiaries = [
-    {
-      firstName: "John",
-      lastName: "Doe",
-      lastPurchase: "Shoes",
-      date: "2021-09-01",
-    },
-    {
-      firstName: "Jane",
-      lastName: "Doe",
-      lastPurchase: "Shirt",
-      date: "2021-08-15",
-    },
-    {
-      firstName: "Bob",
-      lastName: "Smith",
-      lastPurchase: "Pants",
-      date: "2021-07-30",
-    },
-  ];
+  const beneficiaries = fetchedData.map((item) => ({
+    firstName: item.firstName || "", 
+    lastName: item.lastName || "", 
+    lastPurchase: getRandomItem(["Shoes", "Shirt", "Eggs", "Milk", "Potatoes", "Apples", "Oranges"]), //temporarily select last purchase from these
+    date: getRandomItem(["2023-07-30", "2023-08-03", "2023-08-05"]),//terporarily select last purchase date
+  }));
+
+  useEffect(() => {
+
+    axios
+      .get("http://localhost:3000/beneficiaries")
+      .then((response) => {
+        setFetchedData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data from MongoDB API:", error);
+      });
+  }, []);
+
 
   return (
     <Routes>
