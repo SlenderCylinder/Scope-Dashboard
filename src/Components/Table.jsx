@@ -15,14 +15,14 @@ export default function Table({ searchQuery, beneficiaries }) {
           <th className="Cell w-[120px] self-stretch bg-white bg-opacity-5 border-l border-t border-zinc-600">
             <div className="Content self-stretch px-3 py-2.5">
               <div className="Text grow shrink basis-0 text-white text-xs font-semibold leading-none">
-                B. First name
+                First Name
               </div>
             </div>
           </th>
           <th className="Cell w-[120px] self-stretch bg-white bg-opacity-5 border-l border-t border-zinc-600">
             <div className="Content self-stretch px-3 py-2.5">
               <div className="Text grow shrink basis-0 text-white text-xs font-semibold leading-none">
-                B. Last name
+                Last Name
               </div>
             </div>
           </th>

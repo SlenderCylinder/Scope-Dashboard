@@ -27,7 +27,9 @@ export default function BulkBen() {
     }, 500);
 
     if (!file) {
-      return;
+      toast.error("Error: No file selected.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
     // Check the file type (to make sure it's CSV)
     if (file.name.endsWith(".csv")) {
@@ -87,7 +89,7 @@ export default function BulkBen() {
       });
     } else {
       //Toast notification for invalid file type
-      toast.error("Failed to upload beneficiaries. This file format is not supported.", {
+      toast.error("Error: this file format is not supported. Only CSV files allowed.", {
         position: toast.POSITION.TOP_CENTER,
       });
     }
@@ -112,7 +114,7 @@ export default function BulkBen() {
               d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             />
           </svg>
-          <span className="ml-2">Upload CSV or Excel file</span>
+          <span className="ml-2">Upload CSV file</span>
         </label>
         <input
           id="file-upload"
