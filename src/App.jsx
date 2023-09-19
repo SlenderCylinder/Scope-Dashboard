@@ -9,6 +9,7 @@ import Search from "./Components/Search";
 import Table from "./Components/Table";
 import Beneficiary from "./Beneficiary";
 import axios from "axios";
+import LoadingSpinner from "./Components/LoadingSpinner";
 
 export default function App({ userLoggedIn }) {
   const [searchQuery, setSearchQuery] = useState("");

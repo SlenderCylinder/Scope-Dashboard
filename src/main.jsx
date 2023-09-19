@@ -7,6 +7,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import firebaseConfig from './firebase/firebase-config.jsx';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import LoadingSpinner from "./Components/LoadingSpinner";
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
@@ -14,7 +15,7 @@ const analytics = getAnalytics(app);
 const auth = getAuth();
 
 function Main() {
-  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [userLoggedIn, setUserLoggedIn] = useState(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -31,6 +32,11 @@ function Main() {
       unsubscribe(); // Cleanup the subscription when the component unmounts
     };
   }, [auth]);
+
+  if (userLoggedIn === null) {
+    // Loading state
+    return <LoadingSpinner />;
+  }
 
   return (
     <React.StrictMode>
