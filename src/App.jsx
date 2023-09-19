@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route,  BrowserRouter as Router, Navigate } from "react-router-dom";
 import LoginPage from "./LoginPage"; 
+import NotFoundPage from "./Components/NotFoundPage";
 import Nav from "./Nav";
 import Title from "./Components/Title";
 import BenCard from "./Components/BenCard";
@@ -9,7 +10,6 @@ import Search from "./Components/Search";
 import Table from "./Components/Table";
 import Beneficiary from "./Beneficiary";
 import axios from "axios";
-import LoadingSpinner from "./Components/LoadingSpinner";
 
 export default function App({ userLoggedIn }) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -93,6 +93,11 @@ export default function App({ userLoggedIn }) {
           )
         }
       ></Route>
+      <Route
+        path="*"
+        element={ <Navigate to="/404notfound" /> }
+      />
+      <Route path="/404notfound" element={<NotFoundPage />} />
     </Routes>
   );
 }
