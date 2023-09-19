@@ -41,6 +41,11 @@ export default function BenCard({ mp, fp }) {
     fetchBeneficiaryData();
   }, []);
 
+  //CSS classes for light mode and dark mode
+  const lightModeClass = "bg-white text-black";
+  const darkModeClass = "bg-gray-600 text-white";
+
+
   // The rest of your component code remains the same, but use the maleCount and femaleCount state variables to display the counts
   return (
     <div className="flex mr-20 flex-col justify-between px-10 py-5 w-[300px] h-[200px] bg-white rounded-[60px] shadow">

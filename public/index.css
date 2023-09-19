@@ -1,3 +1,38 @@
+/* Tailwind CSS setup */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Dark mode styles */
+[data-theme='dark'] {
+  /* Define dark mode specific styles using CSS variables */
+  --bg-primary: #1a202c;
+  --text-primary: #d1d5db;
+  --bg-secondary: #2d3748;
+  --text-secondary: #e2e8f0;
+  /* Add more variables as needed */
+}
+
+/* Light mode styles (default) */
+[data-theme='light'] {
+  /* Define light mode specific styles using CSS variables */
+  --bg-primary: #ffffff;
+  --text-primary: #333333;
+  --bg-secondary: #f3f4f6;
+  --text-secondary: #6b7280;
+  /* Add more variables as needed */
+}
+
+/* Apply variables to your elements using Tailwind CSS classes */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Apply dark mode to elements when needed */
+.dark {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+/* Add more styles as needed */
