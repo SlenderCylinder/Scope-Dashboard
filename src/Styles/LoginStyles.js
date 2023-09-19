@@ -25,6 +25,7 @@ export const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  color: #3380c8;
 `;
 
 export const Button = styled.button`
@@ -40,6 +41,7 @@ export const Button = styled.button`
     background-color: #0056b3;
   }
 `;
+
 
 export const CustomBackground = styled.div`
   background-color: #2c89e1; /* Set the desired background color */
