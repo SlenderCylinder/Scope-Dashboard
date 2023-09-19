@@ -6,7 +6,8 @@ function NotFoundPage() {
   return (
     <div className="not-found-container">
       <img src={wfp_logo} alt="WFP Logo" className="logo" />
-      <h1>404 - Page Not Found</h1>
+      <h1>404</h1>
+      <h1>Page Not Found</h1>
       <p>Sorry, the page you are looking for does not exist.</p>
     </div>
   );

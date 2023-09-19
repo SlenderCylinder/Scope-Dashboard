@@ -9,6 +9,7 @@ import {
     Form,
     Input,
     Button,
+    CustomBackground,
   } from "./Styles/LoginStyles";
 
 function LoginPage() {
@@ -37,9 +38,12 @@ function LoginPage() {
   }
 
   return (
+    <div>
+    <ToastContainer />
+    <CustomBackground>
     <Container>
-      <Title>Login</Title>
-      <ToastContainer />
+      <h1>Welcome Back!</h1>
+      <Title>Sign in to continue.</Title>
       <Form onSubmit={handleLogin}>
         <Input
           type="email"
@@ -56,6 +60,8 @@ function LoginPage() {
         <Button type="submit">Login</Button>
       </Form>
     </Container>
+    </CustomBackground>
+    </div>
   );
 }
 

@@ -28,7 +28,7 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
-  background-color: #007bff;
+  background-color: #688daf;
   color: white;
   border: none;
   border-radius: 4px;
@@ -39,4 +39,16 @@ export const Button = styled.button`
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+export const CustomBackground = styled.div`
+  background-color: #2c89e1; /* Set the desired background color */
+  color: #f4f0f0; /* Set the desired text color */
+  font-family: 'YourFontName', sans-serif; /* Replace with your desired font family */
+  font-size: 3rem; /* Adjust font size as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 `;
