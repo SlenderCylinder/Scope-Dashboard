@@ -36,6 +36,13 @@ export default function Table({ searchQuery, beneficiaries }) {
           <th className="Cell w-[120px] self-stretch bg-white bg-opacity-5 border-l border-t border-zinc-600">
             <div className="Content self-stretch px-3 py-2.5">
               <div className="Text grow shrink basis-0 text-white text-xs font-semibold leading-none">
+                Balance
+              </div>
+            </div>
+          </th>
+          <th className="Cell w-[120px] self-stretch bg-white bg-opacity-5 border-l border-t border-zinc-600">
+            <div className="Content self-stretch px-3 py-2.5">
+              <div className="Text grow shrink basis-0 text-white text-xs font-semibold leading-none">
                 Date
               </div>
             </div>
@@ -63,6 +70,13 @@ export default function Table({ searchQuery, beneficiaries }) {
               <div className="Content self-stretch px-3 py-2.5">
                 <div className="Text grow shrink basis-0 text-white text-xs font-normal leading-none">
                   {beneficiary.lastPurchase}
+                </div>
+              </div>
+            </td>
+            <td className="Cell w-[120px] self-stretch bg-white bg-opacity-0 border-l border-t border-zinc-600">
+              <div className="Content self-stretch px-3 py-2.5">
+                <div className="Text grow shrink basis-0 text-white text-xs font-normal leading-none">
+                  {beneficiary.balance}
                 </div>
               </div>
             </td>

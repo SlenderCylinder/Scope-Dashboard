@@ -23,13 +23,6 @@ export default function App() {
     return items[randomIndex];
   };
 
-  const beneficiaries = fetchedData.map((item) => ({
-    firstName: item.firstName || "", 
-    lastName: item.lastName || "", 
-    lastPurchase: getRandomItem(["Shoes", "Shirt", "Eggs", "Milk", "Potatoes", "Apples", "Oranges"]), //temporarily select last purchase from these
-    date: getRandomItem(["2023-07-30", "2023-08-03", "2023-08-05"]),//terporarily select last purchase date
-  }));
-
   useEffect(() => {
 
     axios
@@ -42,6 +35,13 @@ export default function App() {
       });
   }, []);
 
+  const beneficiaries = fetchedData.map((item) => ({
+    firstName: item.firstName || "", 
+    lastName: item.lastName || "",
+    lastPurchase: getRandomItem(["Shoes", "Shirt", "Eggs", "Milk", "Potatoes", "Apples", "Oranges"]), //temporarily select last purchase
+    balance: item.balance || "",
+    date: getRandomItem(["2023-07-30", "2023-08-03", "2023-08-05"]),//terporarily select last purchase date
+  }));
 
   return (
     <Routes>
