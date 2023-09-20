@@ -10,10 +10,16 @@ import Search from "./Components/Search";
 import Table from "./Components/Table";
 import Beneficiary from "./Beneficiary";
 import axios from "axios";
+import { getAuth } from "firebase/auth";
 
 export default function App({ userLoggedIn }) {
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [fetchedData, setFetchedData] = useState([]); // State variable for fetched data
+  const [fetchedData, setFetchedData] = useState([]);
+  const [emailName, setEmailName] = useState(""); 
 
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
@@ -25,6 +31,15 @@ export default function App({ userLoggedIn }) {
     return items[randomIndex];
   };
 
+  useEffect(() => {
+    if (user) {
+      const emailParts = user.email.split("@");
+      const name = emailParts[0];
+      // Update emailName with the user's name
+      setEmailName(name);
+    }
+  }, [user]);
+  
   useEffect(() => {
 
     axios
@@ -63,7 +78,7 @@ export default function App({ userLoggedIn }) {
               <div className="flex flex-col h-screen">
                 <Nav />
                 <div className="flex flex-col flex-1 p-5">
-                  <Title name={"Manjula"} />
+                  <Title name={emailName} />
                   <div className="flex flex-row items-start justify-start space-x-5 my-5">
                     <BenCard mp={60} fp={40} />
                     <ReCard
