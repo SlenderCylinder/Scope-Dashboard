@@ -13,21 +13,25 @@ export default function BenCard({ mp, fp }) {
     try {
       const response = await axios.get('http://localhost:3000/beneficiaries');
       const data = response.data;
+
       const count = data.length; // Get the number of entries
       setBeneficiaryCount(count);
 
-      // Calculate male and female counts
       let male = 0;
       let female = 0;
+
+      // Calculate male and female counts
       data.forEach((entry) => {
-        if (entry.gender === 'male') {
+        if (entry.gender === 'Male' || entry.gender === 'male') {
           male++;
-        } else if (entry.gender === 'female') {
+        } else if (entry.gender === 'Female' || entry.gender === 'female') {
           female++;
         }
       });
+
       setMaleCount(male);
       setFemaleCount(female);
+
     } catch (error) {
       console.error('Error fetching beneficiary data:', error);
     }

@@ -9,6 +9,7 @@ import ReCard from "./Components/ReCard";
 import Search from "./Components/Search";
 import Table from "./Components/Table";
 import Beneficiary from "./Beneficiary";
+import ProfileSettings from "./ProfileSettings";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
 
@@ -113,6 +114,7 @@ export default function App({ userLoggedIn }) {
         element={ <Navigate to="/404notfound" /> }
       />
       <Route path="/404notfound" element={<NotFoundPage />} />
+      <Route path="/edit_profile" element={userLoggedIn ? <ProfileSettings /> : <Navigate to="/login" />} />
     </Routes>
   );
 }

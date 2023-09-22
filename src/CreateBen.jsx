@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import api from "../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Nav from "./Nav";
 
 export default function CreateBen() {
   const [formData, setFormData] = useState({
