@@ -12,6 +12,7 @@ export default function ProfileSettings()  {
   const user = auth.currentUser;
   const [profilePicture, setProfilePicture] = useState(user.photoURL);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [displayName, setDisplayName] = useState(user.displayName || "");
   const [uploadSuccess, setUploadSuccess] = useState(false);
 
 
@@ -35,7 +36,7 @@ export default function ProfileSettings()  {
   
       const downloadURL = await getDownloadURL(storageRef);
   
-      await updateProfile(user, { photoURL: downloadURL });
+      await updateProfile(user, { photoURL: downloadURL, displayName: displayName,});
       setProfilePicture(downloadURL);
       setSelectedFile(null);
       setUploadSuccess(true);
@@ -54,7 +55,31 @@ export default function ProfileSettings()  {
     }
   };
 
-
+  const handleDisplayNameChange = (e) => {
+    const name = e.target.value;
+    setDisplayName(name);
+  };
+  
+  const handleDisplayNameSubmit = async () => {
+    if (!displayName) {
+      return;
+    }
+  
+    try {
+      // Update the profile with the new displayName
+      await updateProfile(user, { displayName: displayName });
+      toast.success("Display name updated successfully.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      console.log("Display name updated.");
+    } catch (error) {
+      toast.error("There was an issue with updating the display name.", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      console.error("Error updating display name:", error);
+    }
+  };
+   
   return (
     <div><Nav />
     <ToastContainer/>
@@ -101,6 +126,18 @@ export default function ProfileSettings()  {
                     className="bg-primary text-black px-4 py-2 rounded-md hover:bg-primary-dark focus:outline-none"
                   >
                     Upload
+                  </button>
+                  <Label htmlFor="display-name">Display Name</Label>
+                  <Input
+                    id="display-name"
+                    type="text"
+                    value={displayName}
+                    onChange={handleDisplayNameChange}
+                  />
+                  <button
+                    onClick={handleDisplayNameSubmit}
+                    className="bg-primary text-black px-4 py-2 rounded-md hover:bg-primary-dark focus:outline-none"
+                  > Update Display Name
                   </button>
                 </div>
                 </div>

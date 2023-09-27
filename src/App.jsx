@@ -20,7 +20,8 @@ export default function App({ userLoggedIn }) {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [fetchedData, setFetchedData] = useState([]);
-  const [emailName, setEmailName] = useState(""); 
+  const [Name, setName] = useState(""); 
+  const [displayName, setDisplayName] = useState(""); 
 
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
@@ -35,9 +36,14 @@ export default function App({ userLoggedIn }) {
   useEffect(() => {
     if (user) {
       const emailParts = user.email.split("@");
-      const name = emailParts[0];
-      // Update emailName with the user's name
-      setEmailName(name);
+      const displayName = user.displayName
+      if (displayName){
+        setName(displayName);
+      } else {
+        const name = emailParts[0];
+        setName(name);
+      }
+
     }
   }, [user]);
   
@@ -79,7 +85,7 @@ export default function App({ userLoggedIn }) {
               <div className="flex flex-col h-screen">
                 <Nav />
                 <div className="flex flex-col flex-1 p-5">
-                  <Title name={emailName} />
+                  <Title name={Name} />
                   <div className="flex flex-row items-start justify-start space-x-5 my-5">
                     <BenCard mp={60} fp={40} />
                     <ReCard
